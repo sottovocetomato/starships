@@ -1,0 +1,65 @@
+@use "@picocss/pico/scss/pico";
+@use "@picocss/pico/scss/colors" as *;
+@use "variables" as *;
+
+.page-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  //width: 100vw;
+}
+
+main {
+  background: $white;
+  flex: 1 1 0;
+}
+
+footer {
+  background: $azure-500;
+  height: $footer-height;
+}
+
+header {
+  background: $azure-500;
+  height: $header-height;
+}
+
+.main-section-wrap {
+  display: flex;
+}
+.content-wrap {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 0;
+}
+
+.search-form {
+  width: 65%;
+  margin: $gap auto;
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__input {
+    min-width: 250px;
+    width: 75%;
+  }
+  &__submit {
+    width: 250px;
+  }
+}
+
+.ship-card {
+  justify-content: space-between;
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  p {
+    margin-bottom: 0;
+  }
+}
