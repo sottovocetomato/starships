@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import ShipsList from '@/components/ShipsList.vue'
+import ShipsList from '@/components/ships/ShipsList.vue'
 </script>

@@ -5,6 +5,7 @@
       <SearchForm @formSubmit="onSearch" />
       <article aria-busy="true" v-if="shipStore.isLoading"></article>
       <article
+        v-else-if="shipStore.getAllShips.length"
         v-for="ship in shipStore.getAllShips"
         class="ship-card"
         :id="ship?.id"
@@ -35,6 +36,7 @@
           <p>{{ ship?.cost_in_credits }} Кр.</p>
         </div>
       </article>
+      <h4 class="no-data" v-else>Данные отсутствуют...</h4>
     </div>
   </div>
   <Pagination
@@ -60,7 +62,6 @@ const route = useRoute()
 let initPage: number | LocationQueryValue = 1
 
 onMounted(async () => {
-  console.log('mounted')
   if (route?.query?.search) {
     await onSearch(route?.query?.search)
     return

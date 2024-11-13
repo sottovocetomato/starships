@@ -79,12 +79,15 @@ export const useShipsStore = defineStore({
       try {
         this.loading = true
         const { data }: Ship[] = await shipsApi.getAll(config)
+        console.log(data, 'data')
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
 
         this.loading = false
       } catch (err) {
-        console.error((err as AxiosError).message)
+        this.ships = []
+        this.loading = false
+        throw new Error((err as AxiosError).message)
       }
     },
     async loadAllByPage(url: string) {

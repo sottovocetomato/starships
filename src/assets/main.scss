@@ -179,3 +179,12 @@ footer {
     }
   }
 }
+
+.no-data {
+  text-align: center;
+  margin-top: $gap * 2;
+}
+
+input[type='search' i]::-webkit-search-cancel-button:hover {
+  cursor: pointer !important;
+}

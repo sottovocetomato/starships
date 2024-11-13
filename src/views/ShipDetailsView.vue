@@ -2,7 +2,7 @@
 
 <style></style>
 <script>
-import ShipDetails from '../components/ShipDetails.vue'
+import ShipDetails from '../components/ships/ShipDetails.vue'
 export default {
   components: { ShipDetails },
 }

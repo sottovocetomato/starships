@@ -32,7 +32,7 @@
           <p>{{ getСurrentShip.crew }} чел.</p>
         </div>
         <div class="ship-info-card__content__row">
-          <p>Рейтнг гипердрайва</p>
+          <p>Рейтинг гипердрайва</p>
           <p>{{ getСurrentShip.hyperdrive_rating }}</p>
         </div>
         <div class="ship-info-card__content__row">

@@ -5,9 +5,11 @@
         customWrapClass="search-form__input"
         v-model="inputData"
         maxlength="50"
-        placeholder="Поиск..."
+        placeholder="Поиск"
         :required="false"
-        type="text"
+        type="search"
+        @keyup.enter="onFormSubmit"
+        @keydown="checkChar"
       />
       <div class="search-form__submit">
         <button type="submit">Найти</button>
@@ -30,6 +32,13 @@ const inputData = ref<string | LocationQueryValue>(
 
 function onFormSubmit() {
   emit('formSubmit', inputData.value)
+}
+function checkChar(event: KeyboardEvent) {
+  let char = event.key
+  const isCharAllowed = /^[A-Za-zА-Яа-я0-9- ]+$/.test(char)
+  if (event.key.length === 1 && !isCharAllowed) {
+    event.preventDefault()
+  }
 }
 </script>
 
