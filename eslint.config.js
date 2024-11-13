@@ -20,6 +20,7 @@ export default [
     rules: {
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
+      allowObjectTypes: 'off',
     },
   },
 ]

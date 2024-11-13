@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { CreateAxiosDefaults } from 'axios'
+import type { CreateAxiosDefaults, AxiosInstance, AxiosRequestConfig } from 'axios'
 
 const options = {
   baseURL: 'https://swapi.dev/api',
@@ -10,11 +10,12 @@ const options = {
 
 const AxiosInstance = axios.create(options)
 
-const api = (axios) => ({
-  get: (url, config?: {}) => axios.get(url, config),
-  post: (url, body: {}, config?: {}) => axios.post(url, body, config),
-  patch: (url, body: {}, config?: {}) => axios.patch(url, body, config),
-  delete: (url, config?: {}) => axios.delete(url, config),
+const api = (axios: AxiosInstance) => ({
+  get: (url: string, config?: AxiosRequestConfig) => axios.get(url, config),
+  post: (url: string, body: unknown, config?: AxiosRequestConfig) => axios.post(url, body, config),
+  patch: (url: string, body: unknown, config?: AxiosRequestConfig) =>
+    axios.patch(url, body, config),
+  delete: (url: string, config?: AxiosRequestConfig) => axios.delete(url, config),
 })
 
 export default api(AxiosInstance)

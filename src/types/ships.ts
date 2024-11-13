@@ -1,5 +1,5 @@
 export interface Ship {
-  id: number | string
+  id: string | number
   MGLT: string
   cargo_capacity: string
   consumables: string
@@ -15,7 +15,7 @@ export interface Ship {
   name: string
   passengers: string
   films: string[]
-  pilots: []
+  pilots: string[]
   starship_class: string
   url: string
 }
@@ -29,5 +29,5 @@ export interface DataShip {
   count?: number
   next?: string | null
   previous?: string | null
-  results?: {} | Ship | [] | Ship[]
+  results?: Ship | [] | Ship[]
 }

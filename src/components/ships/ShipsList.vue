@@ -8,7 +8,7 @@
         v-else-if="shipStore.getAllShips.length"
         v-for="ship in shipStore.getAllShips"
         class="ship-card"
-        :id="ship?.id"
+        :id="`${ship?.id}`"
         :key="ship?.name"
         @click="onShipClick"
       >
@@ -52,10 +52,10 @@ import SearchForm from '@/components/form/SearchForm.vue'
 import { useShipsStore } from '@/store/ships'
 
 import { useRouter, useRoute } from 'vue-router'
-import type { LocationQueryValue } from 'vue-router'
+
 import { onMounted } from 'vue'
 import Pagination from '@/components/base/BasePagination.vue'
-import * as events from 'events'
+
 const shipStore = useShipsStore()
 
 const router = useRouter()

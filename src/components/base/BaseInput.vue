@@ -43,7 +43,7 @@ const {
   required = true,
   readonly = false,
   disabled = false,
-  ariaInvalid = null,
+  ariaInvalid = undefined,
   customWrapClass = '',
   customClass = '',
   placeholder = 'Введите текст',

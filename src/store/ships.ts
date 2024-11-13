@@ -21,20 +21,19 @@ export const useShipsStore = defineStore({
     isLoading: (state) => state.loading,
   },
   actions: {
-    prepareShipsData(data: DataShip) {
-      if (Array.isArray(data?.results)) {
-        return data?.results?.map((el: Ship) => {
-          return {
-            ...el,
-            id: el.url
+    prepareShipsData(data: Ship[]): Ship[] {
+      return data?.map((el: Ship) => {
+        return {
+          ...el,
+          id:
+            el.url
               .split('/')
               .filter((e: string) => e)
-              ?.pop(),
-          }
-        })
-      }
+              ?.pop() || -1,
+        }
+      })
     },
-    async prepareShipData(data: Ship) {
+    async prepareShipData(data: PreparedShip) {
       try {
         const filmsArr = data.films
         const peopleArr = data.pilots
@@ -86,7 +85,9 @@ export const useShipsStore = defineStore({
         this.loading = true
         const { data }: AxiosResponse = await shipsApi.getAll(config)
         this.setPageMeta(data)
-        this.ships = this.prepareShipsData(data)
+        if ('results' in data && data.results.length) {
+          this.ships = this.prepareShipsData(data.results)
+        }
 
         this.loading = false
       } catch (err) {

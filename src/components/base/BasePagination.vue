@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { PageMeta } from '@/types/page'
 
@@ -32,18 +32,18 @@ export interface PaginationProps {
   pageMeta: PageMeta
   fetchFn: Function | null
 }
-const { pageMeta = {}, fetchFn = null } = defineProps<PaginationProps>()
+const { pageMeta = { previous: null, next: null }, fetchFn = null } = defineProps<PaginationProps>()
 
 const currentPage = ref<number>(1)
 
 function setCurrentPage(increase = true) {
-  if (currentPage.value !== +route?.query?.page) {
-    currentPage.value = +route?.query?.page
+  if ('page' in route?.query && route.query.page && currentPage.value !== +route.query.page) {
+    currentPage.value = +route.query.page
   }
   if (increase) {
     currentPage.value++
   } else {
-    currentPage.value--
+    if (currentPage.value > 1) currentPage.value--
   }
 }
 
