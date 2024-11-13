@@ -29,10 +29,6 @@ main {
   justify-content: space-between;
 }
 
-footer {
-  background: $azure-500;
-  height: $footer-height;
-}
 h1 {
   text-align: center;
   margin: $gap * 3 0;
@@ -63,7 +59,14 @@ header {
     margin-left: auto;
   }
 }
-
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: $azure-500;
+  height: $footer-height;
+}
 .main-section-wrap {
   display: flex;
 }
@@ -159,6 +162,20 @@ header {
       &:not(:last-child) {
         border-bottom: 1px solid $grey-50;
       }
+    }
+  }
+}
+
+.theme-switcher {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    svg {
+      stroke: $grey-50;
+      fill: $grey-50;
     }
   }
 }
