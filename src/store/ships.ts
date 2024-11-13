@@ -103,7 +103,9 @@ export const useShipsStore = defineStore({
 
         const { data }: AxiosResponse = await shipsApi.getByPageLink(url)
         this.setPageMeta(data)
-        this.ships = this.prepareShipsData(data)
+        if ('results' in data && data.results.length) {
+          this.ships = this.prepareShipsData(data.results)
+        }
 
         this.loading = false
       } catch (err) {
@@ -128,7 +130,9 @@ export const useShipsStore = defineStore({
         this.ships = []
         const { data }: AxiosResponse = await shipsApi.getAllFiltered({ params: { search: query } })
         this.setPageMeta(data)
-        this.ships = this.prepareShipsData(data)
+        if ('results' in data && data.results.length) {
+          this.ships = this.prepareShipsData(data.results)
+        }
         this.loading = false
       } catch (err) {
         console.error((err as AxiosError).message)

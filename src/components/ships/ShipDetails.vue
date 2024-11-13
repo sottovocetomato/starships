@@ -45,7 +45,7 @@
         </div>
 
         <div class="ship-info-card__content__row">
-          <p>Макс. кол-во пассажирова</p>
+          <p>Макс. кол-во пассажиров</p>
           <p>{{ getСurrentShip.passengers }} чел.</p>
         </div>
         <div class="ship-info-card__content__row" v-if="getСurrentShip?.pilots_info?.length">

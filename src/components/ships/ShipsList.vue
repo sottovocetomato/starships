@@ -65,7 +65,7 @@ let initPage = 1
 
 onMounted(async () => {
   if (route?.query?.search) {
-    await onSearch(`${route?.query?.search}`)
+    await onSearch(`${route?.query?.search}`, true)
     return
   }
   if (route?.query?.page && +route?.query?.page > 1) {
@@ -81,8 +81,8 @@ async function onShipClick(e: Event) {
     await router.push(`/view-ship/${e.target?.id}`)
   }
 }
-async function onSearch(data: string) {
-  if (!('search' in route?.query) || (data && route?.query?.search !== data)) {
+async function onSearch(data: string, init = false) {
+  if (init || !('search' in route?.query) || (data && route?.query?.search !== data)) {
     await shipStore.loadFilteredShip(data)
     await router.push({ query: { search: data, page: 1 } })
   }

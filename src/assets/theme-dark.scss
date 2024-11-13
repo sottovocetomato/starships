@@ -2,6 +2,9 @@
 @use "variables" as *;
 
 .page-wrap[data-theme='dark'] {
+  article {
+    box-shadow: 1px 1px 10px $grey-900;
+  }
   h1 {
     color: $grey-150;
   }
