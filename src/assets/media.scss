@@ -1,0 +1,66 @@
+@use "variables" as *;
+@use "@picocss/pico/scss/colors" as *;
+
+@media (max-width: 768px) {
+  .ship-card {
+    flex-direction: column;
+    &__column {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      pointer-events: none;
+      flex: 1 1 50px;
+      align-items: center;
+      &:not(:last-child) {
+        border-bottom: 1px solid $grey-50;
+      }
+      &:nth-child(2) {
+        flex: 1 1 50px;
+      }
+      &:last-child {
+        flex: 1 1 50px;
+      }
+      span,
+      p {
+        width: 50%;
+      }
+      p {
+        text-align: right;
+      }
+    }
+  }
+  .search-form {
+    form {
+      flex-direction: column;
+    }
+    &__input {
+      width: 100%;
+    }
+    &__submit {
+      width: 100%;
+    }
+  }
+  .ship-info-card {
+    &__content {
+      &__row {
+        span,
+        p {
+          width: 50%;
+        }
+        p:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 576px) {
+  .pagination {
+    width: calc(100% - $gap * 2);
+    &__controls {
+      &__btn {
+        width: 125px;
+      }
+    }
+  }
+}

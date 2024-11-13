@@ -1,4 +1,4 @@
-@use "@picocss/pico/scss/pico";
+@use '@picocss/pico/scss/pico';
 @use "@picocss/pico/scss/colors" as *;
 @use "variables" as *;
 
@@ -75,7 +75,7 @@ header {
 }
 
 .search-form {
-  width: 65%;
+  width: 100%;
   margin: $gap auto;
   form {
     width: 100%;
@@ -86,7 +86,7 @@ header {
   }
   &__input {
     min-width: 250px;
-    width: 75%;
+    width: calc(100% - $button-width - $gap * 2);
   }
   &__submit {
     width: 250px;
@@ -147,8 +147,15 @@ header {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      padding: $gap 0;
       p:first-child {
         font-weight: bold;
+      }
+      p {
+        margin-bottom: 0;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid $grey-50;
       }
     }
   }

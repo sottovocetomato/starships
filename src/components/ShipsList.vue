@@ -1,8 +1,8 @@
 <template>
   <div class="ships-list-wrap">
     <h1>Starships - лучшая база данных по космическим кораблям!</h1>
-    <SearchForm @formSubmit="onSearch" />
     <div class="ships-list container">
+      <SearchForm @formSubmit="onSearch" />
       <article aria-busy="true" v-if="shipStore.isLoading"></article>
       <article
         v-for="ship in shipStore.getAllShips"

@@ -24,8 +24,8 @@
           <p>{{ getСurrentShip.cargo_capacity }} кг.</p>
         </div>
         <div class="ship-info-card__content__row">
-          <p>Запасы провизии на экипаж (в часах)</p>
-          <p>{{ getСurrentShip.consumables }} ч.</p>
+          <p>Запасы провизии на экипаж</p>
+          <p>{{ getСurrentShip.consumables }}</p>
         </div>
         <div class="ship-info-card__content__row">
           <p>Экипаж</p>
