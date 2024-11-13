@@ -82,12 +82,13 @@ async function onShipClick(e: Event) {
   }
 }
 async function onSearch(data: string) {
-  await shipStore.loadFilteredShip(data)
-  if (!route?.query?.search || route?.query?.search !== data) {
+  if (!('search' in route?.query) || (data && route?.query?.search !== data)) {
+    await shipStore.loadFilteredShip(data)
     await router.push({ query: { search: data, page: 1 } })
   }
   if (!data) {
     await router.push({ query: { page: 1 } })
+    await shipStore.loadAllShips({ params: { page: 1 } })
   }
 }
 </script>

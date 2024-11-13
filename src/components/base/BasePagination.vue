@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { PageMeta } from '@/types/page'
 
@@ -34,17 +34,28 @@ export interface PaginationProps {
 }
 const { pageMeta = {}, fetchFn = null } = defineProps<PaginationProps>()
 
-const currentPage = ref<number>(+route?.query?.page || 1)
+const currentPage = ref<number>(1)
+
+function setCurrentPage(increase = true) {
+  if (currentPage.value !== +route?.query?.page) {
+    currentPage.value = +route?.query?.page
+  }
+  if (increase) {
+    currentPage.value++
+  } else {
+    currentPage.value--
+  }
+}
 
 async function loadPreviousPage(): Promise<void> {
   if (!pageMeta?.previous || !fetchFn) return
-  currentPage.value--
+  setCurrentPage(false)
   await router.push({ query: { ...route?.query, page: currentPage.value } })
   await fetchFn(pageMeta?.previous)
 }
 async function loadNextPage(): Promise<void> {
   if (!pageMeta?.next || !fetchFn) return
-  currentPage.value++
+  setCurrentPage(true)
   await router.push({ query: { ...route?.query, page: currentPage.value } })
   await fetchFn(pageMeta?.next)
 }
