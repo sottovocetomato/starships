@@ -75,7 +75,6 @@ onMounted(async () => {
 })
 
 async function onShipClick(e) {
-  console.log(e.target)
   await router.push(`/view-ship/${e.target.id}`)
 }
 async function onSearch(data) {

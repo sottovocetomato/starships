@@ -11,8 +11,6 @@ import { computed, ref } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
-console.log(route)
-// console.log(router)
 
 const previousPage = computed(() => {
   const lastPath = router.options.history.state.back
@@ -24,7 +22,6 @@ const navText = computed(() => {
 })
 
 function onLinkClick() {
-  console.log(previousPage.value, 'previousPage')
   previousPage.value ? router.push(`${previousPage.value}`) : router.push('/')
 }
 </script>

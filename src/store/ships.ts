@@ -44,7 +44,6 @@ export const useShipsStore = defineStore({
 
             if (preparedLink) {
               let pilot = (await peopleApi.getById(preparedLink))?.data
-              console.log(pilot)
               if (!pilot) continue
               peopleInfo.push(pilot.name)
             }
@@ -56,7 +55,6 @@ export const useShipsStore = defineStore({
 
             if (preparedLink) {
               let film = (await filmsApi.getById(preparedLink))?.data
-              console.log(film)
               if (!film) continue
               filmsInfo.push(film.title)
             }
@@ -79,7 +77,6 @@ export const useShipsStore = defineStore({
       try {
         this.loading = true
         const { data }: Ship[] = await shipsApi.getAll(config)
-        console.log(data, 'data')
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
 

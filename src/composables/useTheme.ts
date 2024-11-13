@@ -18,7 +18,7 @@ const isLightTheme = computed(() => currentTheme.value === Theme.LIGHT)
 export const useTheme = (): ThemeResult => {
   function getCurrentTheme() {
     const savedTheme = localStorage.getItem('picoPreferredColorScheme')
-    console.log(savedTheme, 'getting theme')
+
     if (!savedTheme) {
       localStorage.setItem('picoPreferredColorScheme', 'light')
     } else {
