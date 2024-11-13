@@ -8,16 +8,28 @@ export const useShipsStore = defineStore({
   state: () => ({
     ships: [] as Ship[],
     currentShip: {} as Ship,
+    loading: false as boolean,
   }),
   getters: {
     getAllShips: (state) => state.ships,
     getСurrentShip: (state) => state.currentShip,
+    isLoading: (state) => state.loading,
   },
   actions: {
     async loadAllShips(config: object) {
       try {
+        this.loading = true
         const { data }: Ship[] = await shipsApi.getAll(config)
-        this.ships = data?.results
+        this.ships = data?.results?.map((el) => {
+          return {
+            ...el,
+            id: el.url
+              .split('/')
+              .filter((e) => e)
+              ?.pop(),
+          }
+        })
+        this.loading = false
       } catch (err) {
         console.error((err as AxiosError).message)
       }
@@ -31,9 +43,21 @@ export const useShipsStore = defineStore({
       }
     },
 
-    async loadFilteredUsers(payload: {}, config?: object, infinite: boolean = false) {
+    async loadFilteredShip(query) {
       try {
-        return await users.getAllFiltered(payload)
+        this.loading = true
+        this.ships = []
+        const { data }: Ship = await shipsApi.getAllFiltered({ params: { search: query } })
+        this.ships = data?.results?.map((el) => {
+          return {
+            ...el,
+            id: el.url
+              .split('/')
+              .filter((e) => e)
+              ?.pop(),
+          }
+        })
+        this.loading = false
       } catch (err) {
         console.error((err as AxiosError).message)
       }

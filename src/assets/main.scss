@@ -59,6 +59,17 @@ header {
   font-size: 0.8rem;
   display: flex;
   flex-direction: row;
+  &:hover {
+    cursor: pointer;
+    background-color: $slate-100;
+  }
+  &__column {
+    pointer-events: none;
+    flex: 1 1 50px;
+  }
+  span {
+    font-weight: bold;
+  }
   p {
     margin-bottom: 0;
   }

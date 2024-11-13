@@ -6,9 +6,10 @@
         v-model="inputData"
         maxlength="50"
         placeholder="Поиск..."
+        :required="false"
       />
       <div class="search-form__submit">
-        <button :disabled="buttonDisabled" type="submit">Найти</button>
+        <button type="submit">Найти</button>
       </div>
     </form>
   </div>
@@ -17,13 +18,14 @@
 <script setup lang="ts">
 import BaseInput from '../base/BaseInput.vue'
 import { computed, ref } from 'vue'
+import { LocationQueryValue, useRoute } from 'vue-router'
 const emit = defineEmits<{
   formSubmit: [inputData: string]
 }>()
-
-const inputData = ref('')
-
-const buttonDisabled = computed(() => !inputData.value.length)
+const route = useRoute()
+const inputData = ref<string | LocationQueryValue>(
+  (route?.query?.search as LocationQueryValue) ?? ''
+)
 
 function onFormSubmit() {
   emit('formSubmit', inputData.value)
