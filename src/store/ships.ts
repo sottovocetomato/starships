@@ -4,6 +4,7 @@ import type { PageMeta } from '@/types/PageMeta'
 import { AxiosError } from 'axios'
 import shipsApi from '@/api/ships'
 import filmsApi from '@/api/films'
+import peopleApi from '@/api/people'
 
 export const useShipsStore = defineStore({
   id: 'ships',
@@ -34,7 +35,21 @@ export const useShipsStore = defineStore({
     async prepareShipData(data) {
       try {
         const filmsArr = data.films
+        const peopleArr = data.pilots
         let filmsInfo = []
+        let peopleInfo = []
+        if (peopleArr.length) {
+          for (const link of peopleArr) {
+            const preparedLink = link.split('/api')?.[1]
+
+            if (preparedLink) {
+              let pilot = (await peopleApi.getById(preparedLink))?.data
+              console.log(pilot)
+              if (!pilot) continue
+              peopleInfo.push(pilot.name)
+            }
+          }
+        }
         if (filmsArr.length) {
           for (const link of filmsArr) {
             const preparedLink = link.split('/api')?.[1]
@@ -48,6 +63,7 @@ export const useShipsStore = defineStore({
           }
         }
         data.films_info = filmsInfo
+        data.pilots_info = peopleInfo
       } catch (err) {
         console.error((err as AxiosError).message)
       }

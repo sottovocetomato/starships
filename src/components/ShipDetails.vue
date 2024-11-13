@@ -48,9 +48,9 @@
           <p>Макс. кол-во пассажирова</p>
           <p>{{ getСurrentShip.passengers }} чел.</p>
         </div>
-        <div class="ship-info-card__content__row" v-if="getСurrentShip?.pilots?.length">
+        <div class="ship-info-card__content__row" v-if="getСurrentShip?.pilots_info?.length">
           <p>Известные пилоты</p>
-          <p>{{ getСurrentShip.pilots.join(',') }}</p>
+          <p>{{ getСurrentShip.pilots_info.join(',') }}</p>
         </div>
         <div class="ship-info-card__content__row">
           <p>Класс корабля</p>
