@@ -1,4 +1,5 @@
 import './assets/main.scss'
+import './assets/theme-dark.scss'
 import './assets/media.scss'
 
 import { createApp } from 'vue'

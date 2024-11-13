@@ -1,0 +1,37 @@
+@use "@picocss/pico/scss/colors" as *;
+@use "variables" as *;
+
+.page-wrap[data-theme='dark'] {
+  h1 {
+    color: $grey-150;
+  }
+  header,
+  footer {
+    background: $slate-600;
+  }
+  button {
+    background-color: $slate-600;
+    border: 1px solid $slate-600;
+
+    &:hover {
+      background-color: $slate-500;
+      border: 1px solid $slate-500;
+    }
+    &:disabled {
+      background-color: $slate-300;
+      border: 1px solid $slate-300;
+    }
+  }
+  .ship-info-card {
+    box-shadow: 1px 1px 20px $grey-900;
+  }
+  .ship-card {
+    box-shadow: 1px 1px 10px $grey-900;
+    &:hover {
+      background: $slate-500;
+    }
+    span {
+      color: $grey-300;
+    }
+  }
+}

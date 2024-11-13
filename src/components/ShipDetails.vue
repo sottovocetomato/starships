@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="ship-info container">
     <article :aria-busy="shipStore.isLoading" v-if="shipStore.isLoading"></article>
     <article v-else class="ship-info-card">
       <div class="ship-info-card__content">

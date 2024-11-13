@@ -137,7 +137,9 @@ header {
     }
   }
 }
-
+.ship-info {
+  margin-top: $gap;
+}
 .ship-info-card {
   &__content {
     display: flex;
