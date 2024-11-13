@@ -1,38 +1,41 @@
 <template>
-  <SearchForm @formSubmit="onSearch" />
-  <div class="ships-list container">
-    <article aria-busy="true" v-if="shipStore.isLoading"></article>
-    <article
-      v-for="ship in shipStore.getAllShips"
-      class="ship-card"
-      :id="ship?.id"
-      :key="ship?.name"
-      @click="onShipClick"
-    >
-      <div class="ship-card__column">
-        <span> Название </span>
-        <p>{{ ship?.name }}</p>
-      </div>
-      <div class="ship-card__column">
-        <span> Модель </span>
-        <p class="trim">{{ ship?.model }}</p>
-      </div>
+  <div class="ships-list-wrap">
+    <h1>Starships - лучшая база данных по космическим кораблям!</h1>
+    <SearchForm @formSubmit="onSearch" />
+    <div class="ships-list container">
+      <article aria-busy="true" v-if="shipStore.isLoading"></article>
+      <article
+        v-for="ship in shipStore.getAllShips"
+        class="ship-card"
+        :id="ship?.id"
+        :key="ship?.name"
+        @click="onShipClick"
+      >
+        <div class="ship-card__column">
+          <span> Название </span>
+          <p>{{ ship?.name }}</p>
+        </div>
+        <div class="ship-card__column">
+          <span> Модель </span>
+          <p>{{ ship?.model }}</p>
+        </div>
 
-      <div class="ship-card__column">
-        <span> Макс. скорость </span>
-        <p>{{ ship?.max_atmosphering_speed }}</p>
-      </div>
+        <div class="ship-card__column">
+          <span> Макс. скорость </span>
+          <p>{{ ship?.max_atmosphering_speed }}</p>
+        </div>
 
-      <div class="ship-card__column">
-        <span> Класс корабля </span>
-        <p>{{ ship?.starship_class }}</p>
-      </div>
+        <div class="ship-card__column">
+          <span> Класс корабля </span>
+          <p>{{ ship?.starship_class }}</p>
+        </div>
 
-      <div class="ship-card__column">
-        <span> Стоимость </span>
-        <p>{{ ship?.cost_in_credits }} Кр.</p>
-      </div>
-    </article>
+        <div class="ship-card__column">
+          <span> Стоимость </span>
+          <p>{{ ship?.cost_in_credits }} Кр.</p>
+        </div>
+      </article>
+    </div>
   </div>
   <Pagination
     v-if="!!shipStore.pageMeta.count"

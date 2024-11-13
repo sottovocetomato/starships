@@ -1,6 +1,5 @@
 <template>
   <main class="container-fluid">
-    <h1>Starships - лучшая база данных по космическим кораблям!</h1>
     <ShipsList />
   </main>
 </template>

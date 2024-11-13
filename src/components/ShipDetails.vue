@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <article :aria-busy="shipStore.isLoading" v-if="shipStore.isLoading"></article>
-    <article v-else>
+    <article v-else class="ship-info-card">
       <div class="ship-info-card__content">
         <div class="ship-info-card__content__row">
           <p>Модель</p>
