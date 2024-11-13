@@ -7,7 +7,7 @@
   <!--    </div>-->
   <!--  </header>-->
   <Suspense>
-    <div class="page-wrap">
+    <div class="page-wrap" data-theme="light">
       <BaseHeader />
       <RouterView />
       <BaseFooter />

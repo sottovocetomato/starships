@@ -73,7 +73,9 @@ export const useShipsStore = defineStore({
     },
     async loadAllByPage(url: string) {
       try {
+        this.ships = []
         this.loading = true
+
         const { data }: Ship[] = await shipsApi.getByPageLink(url)
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
