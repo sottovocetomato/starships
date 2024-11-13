@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import { useShipsStore } from '@/store/ships'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
@@ -75,11 +75,10 @@ const shipStore = useShipsStore()
 
 const { getСurrentShip } = storeToRefs(shipStore)
 
-const router = useRouter()
 const route = useRoute()
 
 onMounted(async () => {
-  await shipStore.loadShipById(route.params.id as number)
+  await shipStore.loadShipById(+route.params.id)
 })
 </script>
 

@@ -20,23 +20,21 @@
 
 <script setup lang="ts">
 import BaseInput from '../base/BaseInput.vue'
-import { computed, ref } from 'vue'
-import { LocationQueryValue, useRoute } from 'vue-router'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 const emit = defineEmits<{
   formSubmit: [inputData: string]
 }>()
 const route = useRoute()
-const inputData = ref<string | LocationQueryValue>(
-  (route?.query?.search as LocationQueryValue) ?? ''
-)
+const inputData = ref<string>(`${route?.query?.search ?? ''}`)
 
 function onFormSubmit() {
   emit('formSubmit', inputData.value)
 }
 function checkChar(event: KeyboardEvent) {
-  let char = event.key
+  const char = event.key
   const isCharAllowed = /^[A-Za-zА-Яа-я0-9- ]+$/.test(char)
-  if (event.key.length === 1 && !isCharAllowed) {
+  if (event?.key?.length === 1 && !isCharAllowed) {
     event.preventDefault()
   }
 }

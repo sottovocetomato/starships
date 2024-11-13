@@ -16,4 +16,10 @@ export default [
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),
   skipFormatting,
+  {
+    rules: {
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
+    },
+  },
 ]

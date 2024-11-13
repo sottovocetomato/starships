@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import type { Ship } from '@/types/ships'
-import type { PageMeta } from '@/types/PageMeta'
-import { AxiosError } from 'axios'
+import type { Ship, DataShip, PreparedShip } from '@/types/ships'
+import type { PageMeta } from '@/types/page'
+import type { AxiosError, AxiosResponse } from 'axios'
 import shipsApi from '@/api/ships'
 import filmsApi from '@/api/films'
 import peopleApi from '@/api/people'
@@ -10,7 +10,7 @@ export const useShipsStore = defineStore({
   id: 'ships',
   state: () => ({
     ships: [] as Ship[],
-    currentShip: {} as Ship,
+    currentShip: {} as PreparedShip,
     loading: false as boolean,
     pageMeta: {} as PageMeta,
   }),
@@ -21,29 +21,31 @@ export const useShipsStore = defineStore({
     isLoading: (state) => state.loading,
   },
   actions: {
-    prepareShipsData(data) {
-      return data?.results?.map((el) => {
-        return {
-          ...el,
-          id: el.url
-            .split('/')
-            .filter((e) => e)
-            ?.pop(),
-        }
-      })
+    prepareShipsData(data: DataShip) {
+      if (Array.isArray(data?.results)) {
+        return data?.results?.map((el: Ship) => {
+          return {
+            ...el,
+            id: el.url
+              .split('/')
+              .filter((e: string) => e)
+              ?.pop(),
+          }
+        })
+      }
     },
-    async prepareShipData(data) {
+    async prepareShipData(data: Ship) {
       try {
         const filmsArr = data.films
         const peopleArr = data.pilots
-        let filmsInfo = []
-        let peopleInfo = []
+        const filmsInfo = []
+        const peopleInfo = []
         if (peopleArr.length) {
           for (const link of peopleArr) {
             const preparedLink = link.split('/api')?.[1]
 
             if (preparedLink) {
-              let pilot = (await peopleApi.getById(preparedLink))?.data
+              const pilot = (await peopleApi.getById(preparedLink))?.data
               if (!pilot) continue
               peopleInfo.push(pilot.name)
             }
@@ -54,7 +56,7 @@ export const useShipsStore = defineStore({
             const preparedLink = link.split('/api')?.[1]
 
             if (preparedLink) {
-              let film = (await filmsApi.getById(preparedLink))?.data
+              const film = (await filmsApi.getById(preparedLink))?.data
               if (!film) continue
               filmsInfo.push(film.title)
             }
@@ -66,17 +68,23 @@ export const useShipsStore = defineStore({
         console.error((err as AxiosError).message)
       }
     },
-    setPageMeta(data) {
+    setPageMeta(data: DataShip) {
       this.pageMeta = {
-        count: data.count,
-        next: data?.next?.split('/api')?.[1],
-        previous: data?.previous?.split('/api')?.[1],
+        count: data?.count,
+        next: data?.next,
+        previous: data?.previous,
+      }
+      if (typeof data?.next === 'string') {
+        this.pageMeta.next = data?.next?.split('/api')?.[1]
+      }
+      if (typeof data?.previous === 'string') {
+        this.pageMeta.previous = data?.previous?.split('/api')?.[1]
       }
     },
     async loadAllShips(config: object) {
       try {
         this.loading = true
-        const { data }: Ship[] = await shipsApi.getAll(config)
+        const { data }: AxiosResponse = await shipsApi.getAll(config)
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
 
@@ -92,7 +100,7 @@ export const useShipsStore = defineStore({
         this.ships = []
         this.loading = true
 
-        const { data }: Ship[] = await shipsApi.getByPageLink(url)
+        const { data }: AxiosResponse = await shipsApi.getByPageLink(url)
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
 
@@ -104,7 +112,7 @@ export const useShipsStore = defineStore({
     async loadShipById(id: string | number, config?: object) {
       try {
         this.loading = true
-        const { data }: Ship = await shipsApi.getById(id, config)
+        const { data }: AxiosResponse = await shipsApi.getById(id, config)
         await this.prepareShipData(data)
         this.currentShip = data
         this.loading = false
@@ -113,11 +121,11 @@ export const useShipsStore = defineStore({
       }
     },
 
-    async loadFilteredShip(query) {
+    async loadFilteredShip(query: string) {
       try {
         this.loading = true
         this.ships = []
-        const { data }: Ship = await shipsApi.getAllFiltered({ params: { search: query } })
+        const { data }: AxiosResponse = await shipsApi.getAllFiltered({ params: { search: query } })
         this.setPageMeta(data)
         this.ships = this.prepareShipsData(data)
         this.loading = false

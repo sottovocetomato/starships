@@ -50,40 +50,44 @@
 import SearchForm from '@/components/form/SearchForm.vue'
 
 import { useShipsStore } from '@/store/ships'
-import TableComponent from '@/components/base/TableComponent.vue'
-import { useRouter, useRoute, LocationQueryValue } from 'vue-router'
+
+import { useRouter, useRoute } from 'vue-router'
+import type { LocationQueryValue } from 'vue-router'
 import { onMounted } from 'vue'
-import Pagination from '@/components/base/Pagination.vue'
+import Pagination from '@/components/base/BasePagination.vue'
+import * as events from 'events'
 const shipStore = useShipsStore()
 
 const router = useRouter()
 const route = useRoute()
 
-let initPage: number | LocationQueryValue = 1
+let initPage = 1
 
 onMounted(async () => {
   if (route?.query?.search) {
-    await onSearch(route?.query?.search)
+    await onSearch(`${route?.query?.search}`)
     return
   }
-  if (route?.query?.page > 1) {
-    initPage = route?.query?.page as LocationQueryValue
+  if (route?.query?.page && +route?.query?.page > 1) {
+    initPage = +route?.query?.page
   } else {
     await router.push({ query: { page: 1 } })
   }
   await shipStore.loadAllShips({ params: { page: initPage } })
 })
 
-async function onShipClick(e) {
-  await router.push(`/view-ship/${e.target.id}`)
+async function onShipClick(e: Event) {
+  if (e.target instanceof Element) {
+    await router.push(`/view-ship/${e.target?.id}`)
+  }
 }
-async function onSearch(data) {
+async function onSearch(data: string) {
   await shipStore.loadFilteredShip(data)
   if (!route?.query?.search || route?.query?.search !== data) {
     await router.push({ query: { search: data, page: 1 } })
   }
   if (!data) {
-    await router.push({ query: {} })
+    await router.push({ query: { page: 1 } })
   }
 }
 </script>

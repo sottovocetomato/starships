@@ -5,7 +5,7 @@ export enum Theme {
   DARK = 'dark',
 }
 interface ThemeResult {
-  currentTheme?: Ref<Theme>
+  currentTheme?: Ref<string, string>
   isLightTheme?: ComputedRef
   getCurrentTheme: () => void
   toggleCurrentTheme: () => void

@@ -21,10 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { LocationQueryValue, useRouter, useRoute } from 'vue-router'
-import type { PageMeta } from '@/types/PageMeta'
-import { InputProps } from '@/components/base/BaseInput.vue'
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import type { PageMeta } from '@/types/page'
+
 const router = useRouter()
 const route = useRoute()
 
@@ -34,18 +34,18 @@ export interface PaginationProps {
 }
 const { pageMeta = {}, fetchFn = null } = defineProps<PaginationProps>()
 
-const currentPage = ref<number>(parseInt(route?.query?.page as LocationQueryValue) || 1)
+const currentPage = ref<number>(+route?.query?.page || 1)
 
 async function loadPreviousPage(): Promise<void> {
-  if (!pageMeta?.previous) return
+  if (!pageMeta?.previous || !fetchFn) return
   currentPage.value--
-  await router.push({ query: { page: currentPage.value } })
+  await router.push({ query: { ...route?.query, page: currentPage.value } })
   await fetchFn(pageMeta?.previous)
 }
 async function loadNextPage(): Promise<void> {
-  if (!pageMeta?.next) return
+  if (!pageMeta?.next || !fetchFn) return
   currentPage.value++
-  await router.push({ query: { page: currentPage.value } })
+  await router.push({ query: { ...route?.query, page: currentPage.value } })
   await fetchFn(pageMeta?.next)
 }
 </script>

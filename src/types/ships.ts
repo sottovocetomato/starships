@@ -1,4 +1,5 @@
 export interface Ship {
+  id: number | string
   MGLT: string
   cargo_capacity: string
   consumables: string
@@ -17,4 +18,16 @@ export interface Ship {
   pilots: []
   starship_class: string
   url: string
+}
+
+export interface PreparedShip extends Ship {
+  films_info: string[]
+  pilots_info: string[]
+}
+
+export interface DataShip {
+  count?: number
+  next?: string | null
+  previous?: string | null
+  results?: {} | Ship | [] | Ship[]
 }

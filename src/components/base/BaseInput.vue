@@ -20,13 +20,14 @@
 </template>
 
 <script setup lang="ts">
+type Booleanish = boolean | 'true' | 'false'
 export interface InputProps {
   type: string
   name?: string
   id?: string
   placeholder?: string
   ariaLabel?: string
-  ariaInvalid?: boolean | null
+  ariaInvalid?: Booleanish | 'grammar' | 'spelling' | undefined
   customWrapClass?: string
   customClass?: string
   required?: boolean
