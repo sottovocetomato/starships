@@ -9,7 +9,7 @@
   <Suspense>
     <div class="page-wrap">
       <BaseHeader />
-      <RouterView :key="route?.fullPath" />
+      <RouterView />
       <BaseFooter />
     </div>
   </Suspense>

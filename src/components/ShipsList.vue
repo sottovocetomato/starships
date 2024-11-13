@@ -15,7 +15,7 @@
       </div>
       <div class="ship-card__column">
         <span> Модель </span>
-        <p>{{ ship?.model }}</p>
+        <p class="trim">{{ ship?.model }}</p>
       </div>
 
       <div class="ship-card__column">
@@ -34,6 +34,11 @@
       </div>
     </article>
   </div>
+  <Pagination
+    v-if="!!shipStore.pageMeta.count"
+    :pageMeta="shipStore.pageMeta"
+    :fetchFn="shipStore.loadAllByPage"
+  />
 </template>
 
 <script setup lang="ts">
@@ -41,19 +46,28 @@ import SearchForm from '@/components/form/SearchForm.vue'
 
 import { useShipsStore } from '@/store/ships'
 import TableComponent from '@/components/base/TableComponent.vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute, LocationQueryValue } from 'vue-router'
 import { onMounted } from 'vue'
+import Pagination from '@/components/base/Pagination.vue'
 const shipStore = useShipsStore()
 
 const router = useRouter()
 const route = useRoute()
 
+let initPage: number | LocationQueryValue = 1
+
 onMounted(async () => {
+  console.log('mounted')
   if (route?.query?.search) {
     await onSearch(route?.query?.search)
-  } else {
-    await shipStore.loadAllShips({ params: { page: 1 } })
+    return
   }
+  if (route?.query?.page > 1) {
+    initPage = route?.query?.page as LocationQueryValue
+  } else {
+    await router.push({ query: { page: 1 } })
+  }
+  await shipStore.loadAllShips({ params: { page: initPage } })
 })
 
 async function onShipClick(e) {
@@ -63,10 +77,10 @@ async function onShipClick(e) {
 async function onSearch(data) {
   await shipStore.loadFilteredShip(data)
   if (!route?.query?.search || route?.query?.search !== data) {
-    await router.push({ path: '/', query: { search: data } })
+    await router.push({ query: { search: data, page: 1 } })
   }
   if (!data) {
-    await router.push({ path: '/', query: {} })
+    await router.push({ query: {} })
   }
 }
 </script>

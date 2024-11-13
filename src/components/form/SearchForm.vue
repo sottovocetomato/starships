@@ -7,6 +7,7 @@
         maxlength="50"
         placeholder="Поиск..."
         :required="false"
+        type="text"
       />
       <div class="search-form__submit">
         <button type="submit">Найти</button>
